@@ -19,7 +19,7 @@ async function displayParts(searchTerm = '') {
     partsListDiv.innerHTML = 'Loading parts...';
 
     try {
-        let url = 'http://localhost:3000/api/parts';
+        let url = ';https://metro-auto-parts-api.onrender.com'
         if (searchTerm) {
             url += `?search=${encodeURIComponent(searchTerm)}`;
         }
@@ -80,7 +80,7 @@ async function viewPartDetails(partId) {
     detailsContent.innerHTML = 'Loading part details...';
 
     try {
-        const response = await fetch(`http://localhost:3000/api/parts/${partId}`);
+        const response = await fetch(`https://metro-auto-parts-api.onrender.com/api/parts/${partId}`);
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error('Part not found.');
@@ -157,7 +157,7 @@ async function loadManagePartsList() {
     managePartsList.innerHTML = 'Loading parts for management...';
 
     try {
-        const response = await fetch('http://localhost:3000/api/parts');
+        const response = await fetch('')https://metro-auto-parts-api.onrender.com;
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -291,7 +291,7 @@ async function deletePart() {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/parts/${currentPartId}`, {
+        const response = await fetch(`https://metro-auto-parts-api.onrender.com/api/parts/${currentPartId}`, {
             method: 'DELETE'
         });
 
