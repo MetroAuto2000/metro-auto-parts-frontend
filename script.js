@@ -113,7 +113,7 @@ function goBackToCatalog() {
 
 function addToCart(partId) {
     // This still fetches all parts for simplicity to ensure 'partToAdd' has all necessary properties
-    fetch('http://localhost:3000/api/parts')
+    fetch('https://metro-auto-parts-api.onrender.com/api/parts')
         .then(res => res.json())
         .then(autoParts => {
             const partToAdd = autoParts.find(part => part.id === partId);
@@ -157,7 +157,7 @@ async function loadManagePartsList() {
     managePartsList.innerHTML = 'Loading parts for management...';
 
     try {
-        const response = await fetch('')https://metro-auto-parts-api.onrender.com;
+        const response = await fetch ('https://metro-auto-parts-api.onrender.com');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -191,7 +191,7 @@ async function loadPartIntoForm(partId) {
     const partIdInput = document.getElementById('partId');
 
     try {
-        const response = await fetch(`http://localhost:3000/api/parts/${partId}`);
+        const response = await fetch('https://metro-auto-parts-api.onrender.com/api/parts/${partId}');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -249,7 +249,7 @@ async function handlePartFormSubmit(event) {
     let method = 'POST'; // Default for adding
 
     if (isEditMode) {
-        url = `http://localhost:3000/api/parts/${currentPartId}`;
+        url = 'https://metro-auto-parts-api.onrender.com/api/parts/${currentPartId}';
         method = 'PUT'; // For updating
     }
 
