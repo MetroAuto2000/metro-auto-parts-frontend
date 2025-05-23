@@ -1,3 +1,6 @@
+// Add this at the very top of your script.js file
+const API_BASE_URL = 'https://metro-auto-parts-api.onrender.com';
+
 // --- 1. Shopping Cart State (Persisted with localStorage) ---
 // Initialize shoppingCart by trying to load it from localStorage
 let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
@@ -19,12 +22,12 @@ async function displayParts(searchTerm = '') {
     partsListDiv.innerHTML = 'Loading parts...';
 
     try {
-        let url = ';https://metro-auto-parts-api.onrender.com'
+        let url = `${API_BASE_URL}/api/parts`; // Correctly use the API_BASE_URL
         if (searchTerm) {
             url += `?search=${encodeURIComponent(searchTerm)}`;
         }
 
-        const response = await fetch(url);
+        const response = await fetch(url); // Use the constructed URL
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -42,12 +45,12 @@ async function displayParts(searchTerm = '') {
             partItemDiv.classList.add('part-item');
 
             partItemDiv.innerHTML = `
-                <img src="${part.imageUrl || 'https://via.placeholder.com/150/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="width:100px; height:100px; object-fit:cover;">
-                <h3>${part.name}</h3>
-                <p>${part.description.substring(0, 70)}...</p>
-                <p class="price">$${part.price.toFixed(2)}</p>
-                <div>
-                    <button class="primary" onclick="viewPartDetails('${part.id}')">View Details</button>
+                <img src="<span class="math-inline">\{part\.imageUrl \|\| 'https\://via\.placeholder\.com/150/CCCCCC/000000?text\=No\+Image'\}" alt\="</span>{part.name}" style="width:100px; height:100px; object-fit:cover;">
+                <h3><span class="math-inline">\{part\.name\}</h3\>
+<p\></span>{part.description.substring(0, 70)}...</p>
+                <p class="price">$<span class="math-inline">\{part\.price\.toFixed\(2\)\}</p\>
+<div\>
+<button class\="primary" onclick\="viewPartDetails\('</span>{part.id}')">View Details</button>
                     <button class="primary" onclick="addToCart('${part.id}')">Add to Cart</button>
                 </div>
             `;
@@ -80,7 +83,7 @@ async function viewPartDetails(partId) {
     detailsContent.innerHTML = 'Loading part details...';
 
     try {
-        const response = await fetch(`https://metro-auto-parts-api.onrender.com/api/parts/${partId}`);
+        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error('Part not found.');
@@ -91,11 +94,11 @@ async function viewPartDetails(partId) {
 
         if (part) {
             detailsContent.innerHTML = `
-                <h3>${part.name}</h3>
-                <img src="${part.imageUrl || 'https://via.placeholder.com/200/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="max-width:200px; max-height:200px; object-fit:cover; display:block; margin: 0 auto 15px;">
+                <h3><span class="math-inline">\{part\.name\}</h3\>
+<img src\="</span>{part.imageUrl || 'https://via.placeholder.com/200/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="max-width:200px; max-height:200px; object-fit:cover; display:block; margin: 0 auto 15px;">
                 <p><strong>Description:</strong> ${part.description}</p>
-                <p><strong>Price:</strong> $${part.price.toFixed(2)}</p>
-                <button class="primary" onclick="addToCart('${part.id}')">Add to Cart</button>
+                <p><strong>Price:</strong> $<span class="math-inline">\{part\.price\.toFixed\(2\)\}</p\>
+<button class\="primary" onclick\="addToCart\('</span>{part.id}')">Add to Cart</button>
             `;
         } else {
             detailsContent.innerHTML = '<p>Part not found.</p>';
@@ -113,7 +116,7 @@ function goBackToCatalog() {
 
 function addToCart(partId) {
     // This still fetches all parts for simplicity to ensure 'partToAdd' has all necessary properties
-    fetch('https://metro-auto-parts-api.onrender.com/api/parts')
+    fetch(`${API_BASE_URL}/api/parts`) // Use API_BASE_URL
         .then(res => res.json())
         .then(autoParts => {
             const partToAdd = autoParts.find(part => part.id === partId);
@@ -157,7 +160,7 @@ async function loadManagePartsList() {
     managePartsList.innerHTML = 'Loading parts for management...';
 
     try {
-        const response = await fetch ('https://metro-auto-parts-api.onrender.com');
+        const response = await fetch(`${API_BASE_URL}/api/parts`); // Use API_BASE_URL and /api/parts
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -172,8 +175,8 @@ async function loadManagePartsList() {
         autoParts.forEach(part => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-                ${part.name} ($${part.price.toFixed(2)})
-                <button class="primary" onclick="loadPartIntoForm('${part.id}')">Edit</button>
+                <span class="math-inline">\{part\.name\} \(</span><span class="math-inline">\{part\.price\.toFixed\(2\)\}\)
+<button class\="primary" onclick\="loadPartIntoForm\('</span>{part.id}')">Edit</button>
             `;
             managePartsList.appendChild(listItem);
         });
@@ -191,7 +194,7 @@ async function loadPartIntoForm(partId) {
     const partIdInput = document.getElementById('partId');
 
     try {
-        const response = await fetch('https://metro-auto-parts-api.onrender.com/api/parts/${partId}');
+        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -245,11 +248,11 @@ async function handlePartFormSubmit(event) {
         return;
     }
 
-    let url = 'http://localhost:3000/api/parts';
+    let url = `${API_BASE_URL}/api/parts`; // Use API_BASE_URL for adding
     let method = 'POST'; // Default for adding
 
     if (isEditMode) {
-        url = 'https://metro-auto-parts-api.onrender.com/api/parts/${currentPartId}';
+        url = `<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{currentPartId}`; // Use API_BASE_URL and backticks for updating
         method = 'PUT'; // For updating
     }
 
@@ -291,7 +294,7 @@ async function deletePart() {
     }
 
     try {
-        const response = await fetch(`https://metro-auto-parts-api.onrender.com/api/parts/${currentPartId}`, {
+        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{currentPartId}`, { // Use API_BASE_URL and backticks
             method: 'DELETE'
         });
 
@@ -324,15 +327,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if (partForm) {
         partForm.addEventListener('submit', handlePartFormSubmit);
     }
-    const deletePartBtn = document.getElementById('deletePartBtn');
-    if (deletePartBtn) {
-        deletePartBtn.addEventListener('click', deletePart);
-    }
-    const clearFormBtn = document.getElementById('clearFormBtn');
-    if (clearFormBtn) {
-        clearFormBtn.addEventListener('click', clearPartForm);
-    }
-});
-
-// Expose saveCartToLocalStorage globally if needed elsewhere (e.g. for initial setup)
-window.saveCartToLocalStorage = saveCartToLocalStorage;
