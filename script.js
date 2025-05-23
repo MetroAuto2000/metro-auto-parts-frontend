@@ -323,7 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // updateCartDisplay(); // REMOVED: Cart display is now on cart.html
 
     // Attach event listeners for the part management form
-    const partForm = document.getElementById('partForm');
-    if (partForm) {
-        partForm.addEventListener('submit', handlePartFormSubmit);
-    }
+        const partForm = document.getElementById('partForm');
+        if (partForm) {
+            partForm.addEventListener('submit', handlePartFormSubmit);
+        }
+    });
