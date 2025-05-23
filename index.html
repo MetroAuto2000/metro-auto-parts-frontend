@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Auto Parts - Your Local Auto Parts Store</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    <header>
+        <h1>Metro Auto Parts Catalog</h1>
+    </header>
+
+    <main>
+        <section id="parts-catalog">
+            <h2>Available Parts</h2>
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Auto Parts - Your Local Auto Parts Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <header>
+            <h1>Metro Auto Parts</h1>
+            <div class="cart-info">
+                <span>Cart Total: $<span id="cart-total">0.00</span></span>
+                <button onclick="submitOrder()">Submit Order</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for parts...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+            <button onclick="showManagementInterface()" style="margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Manage Products</button>
+            </header>
+    </header>
+
+    <main>
+        <section id="parts-catalog">
+            <h2>Available Parts</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for parts...">
+                <button onclick="performSearch()">Search</button>
+            </div>
+            <div class="parts-list">
+                </div>
+        </section>
+
+        </main>
+
+    <footer>
+        <p>&copy; 2025 Metro Auto Parts | 4486 Katima-Mulilo Road, Zambia</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+            <div class="parts-list">
+                </div>
+        </section>
+
+        <section id="part-details" style="display:none;">
+            <h2>Part Details</h2>
+            <div id="details-content">
+                </div>
+            <button onclick="goBackToCatalog()">Back to Catalog</button>
+            <div id="product-management" class="management-container" style="display: none;">
+            <h2>Product Management</h2>
+            <button onclick="showCatalog()">Back to Catalog</button>
+
+            <h3>Add/Edit Part</h3>
+            <form id="partForm">
+                <label for="partId">Part ID:</label>
+                <input type="text" id="partId" required readonly><br>
+
+                <label for="partName">Name:</label>
+                <input type="text" id="partName" required><br>
+
+                <label for="partDescription">Description:</label>
+                <textarea id="partDescription"></textarea><br>
+
+                <label for="partPrice">Price:</label>
+                <input type="number" id="partPrice" step="0.01" required><br>
+
+                <label for="partImageUrl">Image URL:</label>
+                <input type="text" id="partImageUrl"><br>
+
+                <button type="submit" id="savePartBtn">Add Part</button>
+                <button type="button" id="deletePartBtn" style="background-color: #dc3545; display: none;">Delete Part</button>
+                <button type="button" id="clearFormBtn" style="background-color: #6c757d;">Clear Form</button>
+            </form>
+
+            <hr>
+
+            <h3>Existing Parts</h3>
+            <ul id="managePartsList">
+                </ul>
+        </div>
+        </section>
+
+        <section id="shopping-cart">
+            <h2>Shopping Cart</h2>
+            <ul id="cart-items">
+                </ul>
+            <p>Total: $<span id="cart-total">0.00</span></p>
+            <button onclick="submitOrder()">Submit Order</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Metro Auto Parts | 4486 Katima-Mulilo Road, Zambia</p>
+    </footer>
+
+</html>
