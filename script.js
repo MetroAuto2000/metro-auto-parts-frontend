@@ -45,12 +45,12 @@ async function displayParts(searchTerm = '') {
             partItemDiv.classList.add('part-item');
 
             partItemDiv.innerHTML = `
-                <img src="<span class="math-inline">\{part\.imageUrl \|\| 'https\://via\.placeholder\.com/150/CCCCCC/000000?text\=No\+Image'\}" alt\="</span>{part.name}" style="width:100px; height:100px; object-fit:cover;">
-                <h3><span class="math-inline">\{part\.name\}</h3\>
-<p\></span>{part.description.substring(0, 70)}...</p>
-                <p class="price">$<span class="math-inline">\{part\.price\.toFixed\(2\)\}</p\>
-<div\>
-<button class\="primary" onclick\="viewPartDetails\('</span>{part.id}')">View Details</button>
+                <img src="${part.imageUrl || 'https://via.placeholder.com/150/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="width:100px; height:100px; object-fit:cover;">
+                <h3>${part.name}</h3>
+                <p>${part.description.substring(0, 70)}...</p>
+                <p class="price">$${part.price.toFixed(2)}</p>
+                <div>
+                    <button class="primary" onclick="viewPartDetails('${part.id}')">View Details</button>
                     <button class="primary" onclick="addToCart('${part.id}')">Add to Cart</button>
                 </div>
             `;
@@ -83,7 +83,7 @@ async function viewPartDetails(partId) {
     detailsContent.innerHTML = 'Loading part details...';
 
     try {
-        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
+        const response = await fetch(`${API_BASE_URL}/api/parts/${partId}`); // Use API_BASE_URL and backticks
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error('Part not found.');
@@ -94,11 +94,11 @@ async function viewPartDetails(partId) {
 
         if (part) {
             detailsContent.innerHTML = `
-                <h3><span class="math-inline">\{part\.name\}</h3\>
-<img src\="</span>{part.imageUrl || 'https://via.placeholder.com/200/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="max-width:200px; max-height:200px; object-fit:cover; display:block; margin: 0 auto 15px;">
+                <h3>${part.name}</h3>
+                <img src="${part.imageUrl || 'https://via.placeholder.com/200/CCCCCC/000000?text=No+Image'}" alt="${part.name}" style="max-width:200px; max-height:200px; object-fit:cover; display:block; margin: 0 auto 15px;">
                 <p><strong>Description:</strong> ${part.description}</p>
-                <p><strong>Price:</strong> $<span class="math-inline">\{part\.price\.toFixed\(2\)\}</p\>
-<button class\="primary" onclick\="addToCart\('</span>{part.id}')">Add to Cart</button>
+                <p><strong>Price:</strong> $${part.price.toFixed(2)}</p>
+                <button class="primary" onclick="addToCart('${part.id}')">Add to Cart</button>
             `;
         } else {
             detailsContent.innerHTML = '<p>Part not found.</p>';
@@ -175,8 +175,8 @@ async function loadManagePartsList() {
         autoParts.forEach(part => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-                <span class="math-inline">\{part\.name\} \(</span><span class="math-inline">\{part\.price\.toFixed\(2\)\}\)
-<button class\="primary" onclick\="loadPartIntoForm\('</span>{part.id}')">Edit</button>
+                ${part.name} ($${part.price.toFixed(2)})
+                <button class="primary" onclick="loadPartIntoForm('${part.id}')">Edit</button>
             `;
             managePartsList.appendChild(listItem);
         });
@@ -194,7 +194,7 @@ async function loadPartIntoForm(partId) {
     const partIdInput = document.getElementById('partId');
 
     try {
-        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
+        const response = await fetch(`${API_BASE_URL}/api/parts/${partId}`); // Use API_BASE_URL and backticks
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -252,7 +252,7 @@ async function handlePartFormSubmit(event) {
     let method = 'POST'; // Default for adding
 
     if (isEditMode) {
-        url = `<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{currentPartId}`; // Use API_BASE_URL and backticks for updating
+        url = `${API_BASE_URL}/api/parts/${currentPartId}`; // Use API_BASE_URL and backticks for updating
         method = 'PUT'; // For updating
     }
 
@@ -294,7 +294,7 @@ async function deletePart() {
     }
 
     try {
-        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{currentPartId}`, { // Use API_BASE_URL and backticks
+        const response = await fetch(`${API_BASE_URL}/api/parts/${currentPartId}`, { // Use API_BASE_URL and backticks
             method: 'DELETE'
         });
 
@@ -323,8 +323,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // updateCartDisplay(); // REMOVED: Cart display is now on cart.html
 
     // Attach event listeners for the part management form
-        const partForm = document.getElementById('partForm');
-        if (partForm) {
-            partForm.addEventListener('submit', handlePartFormSubmit);
-        }
-    });
+    const partForm = document.getElementById('partForm');
+    if (partForm) {
+        partForm.addEventListener('submit', handlePartFormSubmit);
+    }
+    const deletePartBtn = document.getElementById('deletePartBtn');
+    if (deletePartBtn) {
+        deletePartBtn.addEventListener('click', deletePart);
+    }
+    const clearFormBtn = document.getElementById('clearFormBtn');
+    if (clearFormBtn) {
+        clearFormBtn.addEventListener('click', clearPartForm);
+    }
+});
+
+// Expose saveCartToLocalStorage globally if needed elsewhere (e.g. for initial setup)
+window.saveCartToLocalStorage = saveCartToLocalStorage;
