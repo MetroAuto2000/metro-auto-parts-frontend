@@ -83,7 +83,7 @@ async function viewPartDetails(partId) {
     detailsContent.innerHTML = 'Loading part details...';
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/parts/${partId}`); // Use API_BASE_URL and backticks
+        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error('Part not found.');
@@ -323,19 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // updateCartDisplay(); // REMOVED: Cart display is now on cart.html
 
     // Attach event listeners for the part management form
-    const partForm = document.getElementById('partForm');
-    if (partForm) {
-        partForm.addEventListener('submit', handlePartFormSubmit);
-    }
-    const deletePartBtn = document.getElementById('deletePartBtn');
-    if (deletePartBtn) {
-        deletePartBtn.addEventListener('click', deletePart);
-    }
-    const clearFormBtn = document.getElementById('clearFormBtn');
-    if (clearFormBtn) {
-        clearFormBtn.addEventListener('click', clearPartForm);
-    }
-});
-
-// Expose saveCartToLocalStorage globally if needed elsewhere (e.g. for initial setup)
-window.saveCartToLocalStorage = saveCartToLocalStorage;
+        const partForm = document.getElementById('partForm');
+        if (partForm) {
+            partForm.addEventListener('submit', handlePartFormSubmit);
+        }
+    });
