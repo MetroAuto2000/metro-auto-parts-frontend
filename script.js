@@ -83,7 +83,7 @@ async function viewPartDetails(partId) {
     detailsContent.innerHTML = 'Loading part details...';
 
     try {
-        const response = await fetch(`<span class="math-inline">\{API\_BASE\_URL\}/api/parts/</span>{partId}`); // Use API_BASE_URL and backticks
+        const response = await fetch(`${API_BASE_URL}/api/parts/${partId}`);
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error('Part not found.');
